@@ -69,8 +69,8 @@ exports.init = function () {
         }.bind(thisObj), initObj);
     };
 
-    [Object.prototype, Array.prototype, String.prototype, 
-    Function.prototype, Wrapper.prototype].forEach(
+    [Object.prototype, Array.prototype, String.prototype,
+        Function.prototype, Wrapper.prototype].forEach(
         function (proto) {
             Object.defineProperty(proto, 'check', {
                 get: function () {
