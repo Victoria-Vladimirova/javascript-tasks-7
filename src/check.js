@@ -75,12 +75,16 @@ exports.init = function () {
             Object.defineProperty(proto, 'check', {
                 get: function () {
                     var callee = proto === Wrapper.prototype ? this._object : this;
+                    // атрибут check должен быть недоступен по цепочке наследования
+                    if (Object.getPrototypeOf(this) !== proto) {
+                        return undefined;
+                    }
                     return createCheckFunctions(proto, callee, {
                         get not() {
                             return createCheckFunctions(proto, callee, {}, function (def) {
                                 return function () {
                                     var result = def.apply(callee, arguments);
-                                    if (result === true || result === false) {
+                                    if (typeof result === 'boolean') {
                                         return !result;
                                     }
                                     return undefined;
